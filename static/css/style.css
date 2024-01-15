@@ -1,0 +1,53 @@
+body {
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+h1 {
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 0;
+}
+
+
+#main-div {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 25vw;
+  align-items: flex-start;
+  gap: 2rem;
+
+}
+
+.input-all {
+  font-size: 1rem;
+}
+
+.permanent-field-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  font-size: 2rem;
+}
+
+#shop-name {
+  width: 60%;
+}
+
+#gst-num,
+#address {
+  width: 70%;
+}
+
+#phone-num {
+  width: 50%;
+}
+
+#logo {
+  font-size: 1.1rem;
+}

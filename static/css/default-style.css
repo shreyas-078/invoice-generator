@@ -1,0 +1,53 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 2rem;
+  align-items: center;
+  height: 100vw;
+  background-color: rgb(63, 59, 61);
+}
+
+#main-div {
+  width: 40vw;
+}
+
+h1 {
+  font-size: 4rem;
+  margin-top: 0;
+}
+
+.permanent-field-container {
+  font-size: 1.5rem;
+  width: 50%;
+}
+
+.all-labels {
+  font-size: 2rem;
+  gap: 2rem;
+}
+
+#preview-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+#preview {
+  font-size: 2rem;
+}
+
+#add {
+  font-size: 1.5rem;
+}
+
+.tax-field {
+  font-size: 1.5rem;
+  width: 10%;
+}
+
+.invisible {
+  display: none;
+}
