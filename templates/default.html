@@ -11,51 +11,64 @@
 <body>
   <h1>Transaction Details</h1>
   <div id="main-div">
-    <div class="all-labels">
-      <label for="date">Date :</label>
-      <input type="date" name="date" id="date" class="permanent-field-container">
+
+    <div class="permanent-field-container">
+      <label for="date" class="all-labels">Date: </label>
+      <input type="date" name="date" id="date" class="all-inputs">
       <input type="checkbox" name="current-datecheck" id="datecheck">
-      <label for="current-datecheck">Current Date</label>
+      <label for="current-datecheck" class="all-labels">Current Date</label>
     </div>
 
-    <div class="all-labels">
-      <label for="time">Time :</label>
-      <input type="time" name="time" id="time" class="permanent-field-container">
-      <input type="checkbox" name="current-timecheck" id="timecheck ">
-      <label for="current-timecheck">Current Time</label>
+    <div class="permanent-field-container">
+      <label for="time" class="all-labels">Time: </label>
+      <input type="time" name="time" id="time" class="all-inputs">
+      <input type="checkbox" name="current-timecheck" id="timecheck">
+      <label for="current-timecheck" class="all-labels">Current Time</label>
     </div>
 
-    <div class="all-labels">
-      <label for="item">Item:</label>
-      <input type="text" name="item" id="item" class="permanent-field-container">
+    <div class="permanent-field-container">
+      <label for="item" class="all-labels">Item: </label>
+      <input type="text" name="item" id="item" class="all-inputs">
       <button type="button" id="add">Add</button>
     </div>
 
-    <div>
-      <ul class="invisible" id="list-of-items">
-      </ul>
+    <div class="permanent-field-container">
+      <label for="description" class="all-labels">Description: </label>
+      <input type="text" name="description" id="description" class="all-inputs">
     </div>
-    <div>
-      <label for="description" class="all-labels">Description:</label>
-      <input type="text" name="description" id="description" class="permanent-field-container">
+
+    <div class="permanent-field-container">
+      <label for="amount" class="all-labels">Amount: </label>
+      <input type="number" name="amount" id="amount" class="all-inputs">
     </div>
-    <div>
-      <label for="amount" class="all-labels">Amount:</label>
-      <input type="num" name="amount" class="permanent-field-container" id="amount">
+
+    <div class="permanent-field-container">
+      <label for="quantity" class="all-labels">Quantity: </label>
+      <input type="number" name="quantity" id="quantity" class="all-inputs">
     </div>
-    <div>
-      <label for="tax" class="all-labels">Tax:</label>
-      <select name="tax" id="tax" class="tax-field">
+
+    <div class="permanent-field-container">
+      <label for="tax" class="all-labels">Tax: </label>
+      <select name="tax" id="tax" class="tax-input">
         <option>5%</option>
         <option>12%</option>
         <option>18%</option>
         <option>28%</option>
       </select>
     </div>
+
+    <div class="items-list">
+      <p>Items List:</p>
+      <ul class="invisible" id="list-of-items">
+      </ul>
+    </div>
+
     <div id="preview-block">
       <button type="button" id="preview">Preview</button>
-      <embed type="application/pdf" src="temp/temp.pdf" width="500" height="200">
+      <embed type="application/pdf" src="https://clri-ltc.ca/files/2018/09/TEMP-PDF-Document.pdf" width="500"
+        height="200">
     </div>
+
   </div>
 </body>
 

@@ -1,30 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Spinnaker&display=swap');
+
+* {
+  font-family: "Spinnaker", sans-serif;
+}
+
+:root {
+  --body-bg: #e0e1dd;
+  --heading-bg: #0d1b2a;
+  --heading-text: #778da9;
+}
+
 body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   gap: 2rem;
   align-items: center;
-  height: 100vw;
-  background-color: rgb(63, 59, 61);
+  background-color: var(--body-bg);
+  margin: 0;
 }
 
 #main-div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
   width: 40vw;
 }
 
 h1 {
-  font-size: 4rem;
-  margin-top: 0;
-}
-
-.permanent-field-container {
-  font-size: 1.5rem;
-  width: 50%;
+  font-size: 3rem;
+  background-color: var(--heading-bg);
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 1.5rem;
+  color: var(--heading-text);
 }
 
 .all-labels {
   font-size: 2rem;
-  gap: 2rem;
+  cursor: text;
+}
+
+.permanent-field-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+}
+
+.all-inputs {
+  width: 50%;
+  font-size: 1.5rem;
+}
+
+.items-list {
+  width: 100%;
+  font-size: 1.5rem;
 }
 
 #preview-block {
@@ -33,6 +66,7 @@ h1 {
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  width: 100%;
 }
 
 #preview {
@@ -43,9 +77,13 @@ h1 {
   font-size: 1.5rem;
 }
 
-.tax-field {
+.tax-input {
   font-size: 1.5rem;
   width: 10%;
+}
+
+button {
+  cursor: pointer;
 }
 
 .invisible {
