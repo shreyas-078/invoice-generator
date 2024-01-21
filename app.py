@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request  # Backend Server
+from flask import Flask, render_template, request, jsonify  # Backend Server
 from reportlab.lib.pagesizes import letter  # To create a new document with a template
 from reportlab.lib import colors  # For Colors
+import os
 from reportlab.lib.styles import (
     ParagraphStyle,
 )  # To add paragraph styling
@@ -94,6 +95,14 @@ def template_1():
 @app.route("/default", methods=["GET", "POST"])
 def default_():
     return render_template("default.html")
+
+
+@app.route("/upload-file", methods=["POST"])
+def upload_file_handler():
+    data = request.files["file"]
+    upload_path = os.path.join(os.getcwd(), f"temp")
+    data.save(os.path.join(upload_path, data.filename))
+    return jsonify({"message": "File Uploaded Successfully"})
 
 
 if __name__ == "__main__":

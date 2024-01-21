@@ -36,7 +36,7 @@ h1 {
   display: flex;
   flex-direction: column;
   text-align: center;
-  width: 25vw;
+  width: 30vw;
   align-items: flex-start;
   gap: 3rem;
   border: 2px solid var(--heading-bg);
@@ -55,7 +55,6 @@ h1 {
 
 .input-all:focus {
   outline: none;
-  font-size: 1.5rem;
 }
 
 .permanent-field-container {
@@ -92,6 +91,10 @@ h1 {
   font-size: 1.1rem;
 }
 
+textarea {
+  resize: none;
+}
+
 #gst-num {
   text-transform: uppercase;
 }
@@ -118,4 +121,12 @@ label:hover {
 #confirm-details-btn {
   font-size: 1.3rem;
   align-self: center;
+}
+
+#logo-helper-text {
+  margin: 0;
+}
+
+.invisible {
+  display: none;
 }

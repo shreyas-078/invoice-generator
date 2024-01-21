@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Homepage</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </head>
 
 <body>
@@ -17,21 +18,23 @@
       <input type="text" name="shop-name" id="shop-name" class="input-all">
     </div>
 
-    <div class="permanent-field-container ">
+    <div class="permanent-field-container">
       <label for="Address">Address: </label>
       <textarea name="address" id="address" cols="30" rows="4" class="input-all"></textarea>
     </div>
 
-    <div class="permanent-field-container ">
+    <div class="permanent-field-container">
       <label for="phone-num-label">Phone Number: </label>
       <input type="tel" name="phone" id="phone-num" class="input-all">
     </div>
 
-    <div class="permanent-field-container ">
-      <label for="logo">Logo: </label>
+    <div class="permanent-field-container">
+      <label for="logo" id="logo-label">Logo:<br> (Leave blank if no logo)</label>
       <input type="file" name="logo" id="logo" class="input-all">
-      <button type="button">Upload Logo</button>
+      <button type="button" id="btn-upload-logo">Upload Logo</button>
     </div>
+
+    <p id="logo-helper-text" class="invisible">Please Select a Logo (Supported types: png, jpg, jpeg)</p>
 
     <div class="permanent-field-container">
       <label for="gst" id="gst-num-label">GSTIN:</label>
