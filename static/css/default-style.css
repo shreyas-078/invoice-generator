@@ -25,7 +25,10 @@ body {
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
-  width: 40vw;
+  width: 35vw;
+  border: 2px solid var(--heading-bg);
+  border-radius: 0.7rem;
+  padding: 1rem;
 }
 
 h1 {
@@ -43,11 +46,20 @@ h1 {
   cursor: text;
 }
 
+h2 {
+  margin: 0;
+}
+
+textarea {
+  resize: none;
+}
+
 .permanent-field-container {
   display: flex;
   flex-direction: row;
   gap: 1rem;
   width: 100%;
+  justify-content: space-between;
 }
 
 .all-inputs {
@@ -77,13 +89,58 @@ h1 {
   font-size: 1.5rem;
 }
 
+.item-input-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+#date-selector,
+#time,
+#item,
+#description,
+#amount,
+#quantity,
+#tax {
+  background-color: transparent;
+  padding: 2px;
+  border: 2px solid var(--heading-bg);
+  border-radius: 0.5rem;
+  color: var(--heading-bg);
+}
+
+#tax {
+  width: 10rem;
+}
+
+#item {
+  width: 65%;
+}
+
 .tax-input {
   font-size: 1.5rem;
   width: 10%;
 }
 
 button {
+  background-color: transparent;
   cursor: pointer;
+  padding: 0.4rem;
+  border: 2px solid var(--heading-bg);
+  border-radius: 0.5rem;
+  color: var(--heading-bg);
+  transition: all 0.3s;
+}
+
+button:hover {
+  background-color: var(--heading-bg);
+  color: var(--body-bg);
+}
+
+.important {
+  color: red;
+  font-size: 1rem;
 }
 
 .invisible {

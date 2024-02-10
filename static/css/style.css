@@ -127,6 +127,11 @@ label:hover {
   margin: 0;
 }
 
+.important {
+  color: red;
+  font-size: 1rem;
+}
+
 .invisible {
   display: none;
 }

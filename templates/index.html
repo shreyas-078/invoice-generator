@@ -14,34 +14,37 @@
   <h2>ENTER YOUR STORE DETAILS</h2>
   <div id="main-div">
     <div class="permanent-field-container">
-      <label for="shop-name">Shop Name: </label>
-      <input type="text" name="shop-name" id="shop-name" class="input-all">
+      <label for="shop-name">Shop Name:<span class="important">*</span></label>
+      <input type="text" name="shop-name" id="shop-name" class="input-all" placeholder="Example Shop">
     </div>
 
     <div class="permanent-field-container">
-      <label for="Address">Address: </label>
+      <label for="Address">Address:<span class="important">*</span></label>
       <textarea name="address" id="address" cols="30" rows="4" class="input-all"></textarea>
     </div>
 
     <div class="permanent-field-container">
-      <label for="phone-num-label">Phone Number: </label>
-      <input type="tel" name="phone" id="phone-num" class="input-all">
+      <label for="phone-num-label">Phone Number:<span class="important">*</span></label>
+      <input type="tel" name="phone" id="phone-num" class="input-all" placeholder="123-456-789">
     </div>
 
     <div class="permanent-field-container">
       <label for="logo" id="logo-label">Logo:<br> (Leave blank if no logo)</label>
-      <input type="file" name="logo" id="logo" class="input-all">
+      <input type="file" name="logo" id="logo" class="input-all" accept="image/*">
       <button type="button" id="btn-upload-logo">Upload Logo</button>
     </div>
 
     <p id="logo-helper-text" class="invisible">Please Select a Logo (Supported types: png, jpg, jpeg)</p>
 
     <div class="permanent-field-container">
-      <label for="gst" id="gst-num-label">GSTIN:</label>
-      <input type="text" name="gst-num" id="gst-num" class="input-all">
+      <label for="gst" id="gst-num-label">GSTIN:<span class="important">*</span></label>
+      <input type="text" name="gst-num" id="gst-num" class="input-all" placeholder="22AAAAA0000A2S4">
     </div>
 
     <button type="button" id="confirm-details-btn">Confirm Details</button>
+  </div>
+
+  <p id="incorrect-details-text" class="invisible">Please Enter all Details before proceeding.</p>
 
 </body>
 

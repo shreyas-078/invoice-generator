@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify  # Backend Server
+from flask_wtf.csrf import CSRFError
 from reportlab.lib.pagesizes import letter  # To create a new document with a template
 from reportlab.lib import colors  # For Colors
 import os
@@ -19,10 +20,20 @@ import json  # JSON Decoding
 # Creating Flask App
 app = Flask(__name__, static_folder="static", static_url_path="/static")
 
+store_name = ""
+store_phone = ""
+store_address = ""
+store_gstin = ""
+
 
 # Reportlab Function to create paragraph
 def create_paragraph(text, style):
     return Paragraph(text, style)
+
+
+@app.errorhandler(CSRFError)
+def handle_csrf_error(e):
+    return render_template("csrf_error.html", reason=e.description), 400
 
 
 # Homepage
@@ -33,7 +44,7 @@ def home():
 
 @app.route("/generate-pdf-template-1", methods=["POST"])
 def template_1():
-    data = json.loads(request.data.decode("utf-8"))
+    data = request.get_json()
     story = []
 
     # Creating a PDF Document Template
@@ -92,8 +103,22 @@ def template_1():
     story.append(college_header_table)
 
 
-@app.route("/default", methods=["GET", "POST"])
-def default_():
+@app.route("/default", methods=["POST"])
+def default_post():
+    global store_name, store_address, store_phone, store_gstin
+    data = request.get_json()
+    store_address = data.get("address")
+    store_name = data.get("name")
+    store_phone = data.get("phNo")
+    store_gstin = data.get("gstin")
+    return jsonify({"message": "Successful Upload of Data"})
+
+
+@app.route("/default-page", methods=["GET"])
+def default_get():
+    global store_address, store_gstin, store_name, store_phone
+    if store_phone == store_gstin == store_address == store_name == "":
+        return "<h1 style='text-align: center; width:100%;'>An Error Occured, this could happen if you try to load the default page without providing store details.<h1>"
     return render_template("default.html")
 
 
