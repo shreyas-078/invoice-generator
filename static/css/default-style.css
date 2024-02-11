@@ -138,6 +138,34 @@ button:hover {
   color: var(--body-bg);
 }
 
+#item-name-text,
+#item-amount-text,
+#item-quantity-text {
+  margin: 0;
+  width: 100%;
+  text-align: right;
+  color: red;
+}
+
+ol {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.editable-input {
+  background-color: transparent;
+  font-size: 1.3rem;
+  border: 0px solid transparent;
+}
+
 .important {
   color: red;
   font-size: 1rem;

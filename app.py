@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, jsonify  # Backend Server
-from flask_wtf.csrf import CSRFError
 from reportlab.lib.pagesizes import letter  # To create a new document with a template
 from reportlab.lib import colors  # For Colors
 import os
@@ -29,11 +28,6 @@ store_gstin = ""
 # Reportlab Function to create paragraph
 def create_paragraph(text, style):
     return Paragraph(text, style)
-
-
-@app.errorhandler(CSRFError)
-def handle_csrf_error(e):
-    return render_template("csrf_error.html", reason=e.description), 400
 
 
 # Homepage

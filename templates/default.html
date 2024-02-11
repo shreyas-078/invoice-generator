@@ -32,6 +32,8 @@
       </div>
     </div>
 
+    <p id="item-name-text" class="invisible">Please prvide an item Name to add.</p>
+
     <div class="permanent-field-container">
       <label for="description" class="all-labels">Description:</label>
       <textarea name="description" id="description" cols="30" rows="4" class="all-inputs"></textarea>
@@ -42,10 +44,14 @@
       <input type="number" name="amount" id="amount" class="all-inputs">
     </div>
 
+    <p id="item-amount-text" class="invisible">Please prvide an item Amount.</p>
+
     <div class="permanent-field-container">
       <label for="quantity" class="all-labels">Quantity:<span class="important">*</span></label>
       <input type="number" name="quantity" id="quantity" class="all-inputs">
     </div>
+
+    <p id="item-quantity-text" class="invisible">Please prvide item Quantity.</p>
 
     <div class="permanent-field-container">
       <label for="tax" class="all-labels">Tax:<span class="important">*</span></label>
@@ -59,9 +65,9 @@
   </div>
   <div class="external-feature">
     <div class="items-list invisible">
-      <p>Items List:</p>
-      <ul class="invisible" id="list-of-items">
-      </ul>
+      <h3>Items List:</h3>
+      <ol class="invisible" id="list-of-items">
+      </ol>
     </div>
 
     <div id="preview-block">
