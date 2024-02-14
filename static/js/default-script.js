@@ -9,6 +9,8 @@ const itemNameHelper = document.getElementById("item-name-text");
 const itemQuantityHelper = document.getElementById("item-quantity-text");
 const itemAmountHelper = document.getElementById("item-amount-text");
 const duplicateHelper = document.getElementById("duplicate-helper-text");
+const previewButton = document.getElementById("preview");
+const emptyItemsHelper = document.getElementById("empty-items-helper");
 
 const date = new Date();
 
@@ -51,7 +53,7 @@ timeSelector.value = time;
 // Function to add Item to DOM & Array
 function addItemToList() {
   const itemName = document.getElementById("item").value;
-  const itemDescription = document.getElementById("description").value;
+  let itemDescription = document.getElementById("description").value;
   const itemAmount = document.getElementById("amount").value;
   const itemQuantity = document.getElementById("quantity").value;
 
@@ -65,13 +67,16 @@ function addItemToList() {
     itemNameHelper.classList.remove("invisible");
     return;
   }
+  if (!itemAmount) {
+    itemAmountHelper.classList.remove("invisible");
+    return;
+  }
   if (!itemQuantity) {
     itemQuantityHelper.classList.remove("invisible");
     return;
   }
-  if (!itemAmount) {
-    itemAmountHelper.classList.remove("invisible");
-    return;
+  if (!itemDescription) {
+    itemDescription = "No Description";
   }
 
   itemsList.classList.remove("invisible");
@@ -98,7 +103,7 @@ function addItemToList() {
     itemQuantity: itemQuantity,
   });
 
-  newItem.innerHTML = `Item Name: <input type='text' disabled class='editable-input' value=${itemName}> Description: <input type='text' disabled class='editable-input' value=${itemDescription}> Item Amount: <input type='text' disabled class='editable-input' value=${itemAmount}> Item Quantity: <input type='text' disabled class='editable-input' value=${itemQuantity}><button onClick = "removeElement('${itemName}')">Remove Item</button> <button onClick = "editItem('${
+  newItem.innerHTML = `Item Name: <input type='text' disabled class='editable-input' value='${itemName}'> Description: <input type='text' disabled class='editable-input' value='${itemDescription}'> Item Amount: <input type='text' disabled class='editable-input' value='${itemAmount}'> Item Quantity: <input type='text' disabled class='editable-input' value='${itemQuantity}'><button onClick = "removeElement('${itemName}')">Remove Item</button> <button onClick = "editItem('${
     itemsArray[itemsArray.length - 1]
   }', ${
     itemsArray.length - 1
@@ -134,9 +139,17 @@ function editItem(itemObj, itemIndex, itemClass) {
   saveButton.id = "save-button";
   saveButton.addEventListener("click", () => {
     const itemNameInputValue = currentListItem.querySelector("input").value;
+    const itemDescriptionInputValue = itemNameInput.nextElementSibling.value;
+    const itemAmountInputValue = itemDescriptionInput.nextElementSibling.value;
+    const itemQuantityInputValue = itemAmountInput.nextElementSibling.value;
 
     for (const item of itemsArray) {
-      if (item.itemName === itemNameInputValue) {
+      if (
+        item.itemName === itemNameInputValue &&
+        item.itemDescription === itemDescriptionInputValue &&
+        item.itemAmount === itemAmountInputValue &&
+        item.itemQuantity === itemQuantityInputValue
+      ) {
         currentListItem.querySelector("input").value = initialItemNameInput;
         duplicateHelper.classList.remove("invisible");
         editButton.classList.remove("invisible");
@@ -153,10 +166,6 @@ function editItem(itemObj, itemIndex, itemClass) {
         return;
       }
     }
-
-    const itemDescriptionInputValue = itemNameInput.nextElementSibling.value;
-    const itemAmountInputValue = itemDescriptionInput.nextElementSibling.value;
-    const itemQuantityInputValue = itemAmountInput.nextElementSibling.value;
 
     itemNameInput.disabled =
       itemDescriptionInput.disabled =
@@ -205,7 +214,7 @@ function removeElement(itemToRemove) {
   const elementToRemove = document.querySelector(`.${itemToRemove}`);
   for (const element of itemsArray) {
     if (element.itemName === itemToRemove) {
-      itemsArray.splice(itemsArray.indexOf(itemToRemove), 1);
+      itemsArray.splice(itemsArray.indexOf(element), 1);
     }
   }
   elementToRemove.remove();
@@ -216,3 +225,14 @@ function removeElement(itemToRemove) {
 }
 
 addButton.addEventListener("click", addItemToList);
+
+console.log(emptyItemsHelper);
+
+previewButton.addEventListener("click", () => {
+  console.log(itemsArray);
+  if (itemsArray.length === 0) {
+    emptyItemsHelper.classList.remove("invisible");
+    return;
+  }
+  emptyItemsHelper.classList.add("invisible");
+});

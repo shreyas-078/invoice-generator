@@ -171,7 +171,9 @@ li {
   border-radius: 0.6rem;
 }
 
-#duplicate-helper-text {
+#duplicate-helper-text,
+#empty-items-helper,
+h3 {
   text-align: center;
 }
 
