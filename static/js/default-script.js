@@ -8,6 +8,7 @@ const timeSelector = document.getElementById("time");
 const itemNameHelper = document.getElementById("item-name-text");
 const itemQuantityHelper = document.getElementById("item-quantity-text");
 const itemAmountHelper = document.getElementById("item-amount-text");
+const duplicateHelper = document.getElementById("duplicate-helper-text");
 
 const date = new Date();
 
@@ -90,9 +91,6 @@ function addItemToList() {
 
   const newItem = document.createElement("li");
   newItem.className = `${itemName}`;
-  newItem.innerHTML = `Item Name: <input type='text' disabled class='editable-input' value=${itemName}> Description: <input type='text' disabled class='editable-input' value=${itemDescription}> Item Amount: <input type='text' disabled class='editable-input' value=${itemAmount}> Item Quantity: <input type='text' disabled class='editable-input' value=${itemQuantity}><button onClick = removeElement('${itemName}')>Remove Item</button> <button onClick = editItem(${
-    itemsArray[itemsArray.length]
-  })>Edit Item</button>`;
   itemsArray.push({
     itemName: itemName,
     itemDescription: itemDescription,
@@ -100,10 +98,107 @@ function addItemToList() {
     itemQuantity: itemQuantity,
   });
 
+  newItem.innerHTML = `Item Name: <input type='text' disabled class='editable-input' value=${itemName}> Description: <input type='text' disabled class='editable-input' value=${itemDescription}> Item Amount: <input type='text' disabled class='editable-input' value=${itemAmount}> Item Quantity: <input type='text' disabled class='editable-input' value=${itemQuantity}><button onClick = "removeElement('${itemName}')">Remove Item</button> <button onClick = "editItem('${
+    itemsArray[itemsArray.length - 1]
+  }', ${
+    itemsArray.length - 1
+  }, '${itemName}')" id="edit-button-${itemName}">Edit Item</button>`;
+
   itemsList.appendChild(newItem);
 }
 
-function editItem(itemIndex) {}
+function editItem(itemObj, itemIndex, itemClass) {
+  const currentListItem = document.querySelector(`li.${itemClass}`);
+  const saveButton = document.createElement("button");
+  const editButton = document.querySelector(`#edit-button-${itemClass}`);
+  const itemNameInput = currentListItem.querySelector("input");
+  const initialItemNameInput = itemNameInput.value;
+  const itemDescriptionInput = itemNameInput.nextElementSibling;
+  const itemAmountInput = itemDescriptionInput.nextElementSibling;
+  const itemQuantityInput = itemAmountInput.nextElementSibling;
+  const removeButton = itemQuantityInput.nextElementSibling;
+
+  itemNameInput.disabled =
+    itemDescriptionInput.disabled =
+    itemQuantityInput.disabled =
+    itemAmountInput.disabled =
+      false;
+
+  itemNameInput.classList.add("editing-state");
+  itemDescriptionInput.classList.add("editing-state");
+  itemQuantityInput.classList.add("editing-state");
+  itemAmountInput.classList.add("editing-state");
+
+  editButton.classList.add("invisible");
+  saveButton.textContent = "Save Item";
+  saveButton.id = "save-button";
+  saveButton.addEventListener("click", () => {
+    const itemNameInputValue = currentListItem.querySelector("input").value;
+
+    for (const item of itemsArray) {
+      if (item.itemName === itemNameInputValue) {
+        currentListItem.querySelector("input").value = initialItemNameInput;
+        duplicateHelper.classList.remove("invisible");
+        editButton.classList.remove("invisible");
+        saveButton.remove();
+        itemNameInput.classList.remove("editing-state");
+        itemDescriptionInput.classList.remove("editing-state");
+        itemQuantityInput.classList.remove("editing-state");
+        itemAmountInput.classList.remove("editing-state");
+        itemNameInput.disabled =
+          itemDescriptionInput.disabled =
+          itemQuantityInput.disabled =
+          itemAmountInput.disabled =
+            true;
+        return;
+      }
+    }
+
+    const itemDescriptionInputValue = itemNameInput.nextElementSibling.value;
+    const itemAmountInputValue = itemDescriptionInput.nextElementSibling.value;
+    const itemQuantityInputValue = itemAmountInput.nextElementSibling.value;
+
+    itemNameInput.disabled =
+      itemDescriptionInput.disabled =
+      itemQuantityInput.disabled =
+      itemAmountInput.disabled =
+        true;
+
+    itemsArray[itemIndex].itemName = itemNameInputValue;
+    itemsArray[itemIndex].itemDescription = itemDescriptionInputValue;
+    itemsArray[itemIndex].itemAmount = itemAmountInputValue;
+    itemsArray[itemIndex].itemQuantity = itemQuantityInputValue;
+
+    editButton.classList.remove("invisible");
+    itemNameInput.classList.remove("editing-state");
+    itemDescriptionInput.classList.remove("editing-state");
+    itemQuantityInput.classList.remove("editing-state");
+    itemAmountInput.classList.remove("editing-state");
+    saveButton.remove();
+
+    itemNameInput.className = itemNameInputValue + " editable-input";
+    itemDescriptionInput.className =
+      itemDescriptionInputValue + " editable-input";
+    itemAmountInput.className = itemAmountInputValue + " editable-input";
+    itemQuantityInput.className = itemQuantityInputValue + " editable-input";
+    currentListItem.className = itemNameInputValue;
+
+    removeButton.onclick = null;
+    removeButton.addEventListener(
+      "click",
+      removeElement.bind("this", itemNameInputValue)
+    );
+
+    editButton.onclick = null;
+    editButton.addEventListener(
+      "click",
+      editItem.bind(this, itemsArray[itemIndex], itemIndex, itemNameInputValue)
+    );
+    editButton.id = `edit-button-${itemNameInputValue}`;
+  });
+  currentListItem.appendChild(saveButton);
+  duplicateHelper.classList.add("invisible");
+}
 
 // Function to remove Item from DOM & Items Array
 function removeElement(itemToRemove) {

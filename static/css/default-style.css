@@ -166,6 +166,15 @@ li {
   border: 0px solid transparent;
 }
 
+.editing-state {
+  border: 2px solid var(--heading-bg);
+  border-radius: 0.6rem;
+}
+
+#duplicate-helper-text {
+  text-align: center;
+}
+
 .important {
   color: red;
   font-size: 1rem;
