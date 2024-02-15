@@ -5,3 +5,10 @@ temp/*
 
 # Ignore VS Code settings folder
 .vscode/
+
+# Ignore Everything in the Invoices Folder
+invoices/*
+
+# Don't Ignore the README Files
+!temp/README.md
+!invoices/README.md

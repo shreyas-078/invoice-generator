@@ -259,13 +259,17 @@ previewButton.addEventListener("click", () => {
   })
     .then((response) => {
       if (response.ok) {
-        return response.json();
+        return response;
       } else {
         alert("An Error Occured! Refresh the page and try again.");
       }
     })
     .then((data) => {
-      previewEmbed.src = `file:///${data.path}`;
+      return data.blob();
+    })
+    .then((blob) => {
+      const objectURL = URL.createObjectURL(blob);
+      previewEmbed.src = objectURL;
     });
 
   previewEmbed.classList.remove("invisible");

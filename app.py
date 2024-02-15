@@ -1,5 +1,5 @@
 from click import clear
-from flask import Flask, render_template, request, jsonify  # Backend Server
+from flask import Flask, render_template, request, jsonify, Response  # Backend Server
 from reportlab.lib.pagesizes import letter  # To create a new document with a template
 from reportlab.lib import colors  # For Colors
 import os
@@ -43,7 +43,6 @@ def home():
     return render_template("index.html")
 
 
-# @app.route("/generate-pdf-template-1", methods=["POST"])
 def template_1():
     story = []
 
@@ -131,7 +130,10 @@ def upload_transaction():
     date = data.get("date")
     store_transactions = data.get("transactions")
     path = template_1()
-    return jsonify({"message": "Success!", "path": path})
+    pdf_raw = ""
+    with open(path, "rb") as f:
+        pdf_raw = f.read()
+    return Response(pdf_raw, mimetype="application/pdf")
 
 
 @app.route("/upload-file", methods=["POST"])
