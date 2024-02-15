@@ -11,6 +11,7 @@ const itemAmountHelper = document.getElementById("item-amount-text");
 const duplicateHelper = document.getElementById("duplicate-helper-text");
 const previewButton = document.getElementById("preview");
 const emptyItemsHelper = document.getElementById("empty-items-helper");
+const previewEmbed = document.getElementById("preview-embed");
 
 const date = new Date();
 
@@ -95,7 +96,7 @@ function addItemToList() {
   }
 
   const newItem = document.createElement("li");
-  newItem.className = `${itemName}`;
+  newItem.className = `${itemName.replace(/\s/g, "")}`;
   itemsArray.push({
     itemName: itemName,
     itemDescription: itemDescription,
@@ -105,9 +106,10 @@ function addItemToList() {
 
   newItem.innerHTML = `Item Name: <input type='text' disabled class='editable-input' value='${itemName}'> Description: <input type='text' disabled class='editable-input' value='${itemDescription}'> Item Amount: <input type='text' disabled class='editable-input' value='${itemAmount}'> Item Quantity: <input type='text' disabled class='editable-input' value='${itemQuantity}'><button onClick = "removeElement('${itemName}')">Remove Item</button> <button onClick = "editItem('${
     itemsArray[itemsArray.length - 1]
-  }', ${
-    itemsArray.length - 1
-  }, '${itemName}')" id="edit-button-${itemName}">Edit Item</button>`;
+  }', ${itemsArray.length - 1}, '${itemName.replace(
+    /\s/g,
+    ""
+  )}')" id="edit-button-${itemName.replace(/\s/g, "")}">Edit Item</button>`;
 
   itemsList.appendChild(newItem);
 }
@@ -190,8 +192,7 @@ function editItem(itemObj, itemIndex, itemClass) {
       itemDescriptionInputValue + " editable-input";
     itemAmountInput.className = itemAmountInputValue + " editable-input";
     itemQuantityInput.className = itemQuantityInputValue + " editable-input";
-    currentListItem.className = itemNameInputValue;
-
+    currentListItem.className = itemNameInputValue.replace(/\s/g, "");
     removeButton.onclick = null;
     removeButton.addEventListener(
       "click",
@@ -201,9 +202,14 @@ function editItem(itemObj, itemIndex, itemClass) {
     editButton.onclick = null;
     editButton.addEventListener(
       "click",
-      editItem.bind(this, itemsArray[itemIndex], itemIndex, itemNameInputValue)
+      editItem.bind(
+        this,
+        itemsArray[itemIndex],
+        itemIndex,
+        itemNameInputValue.replace(/\s/g, "")
+      )
     );
-    editButton.id = `edit-button-${itemNameInputValue}`;
+    editButton.id = `edit-button-${itemNameInputValue.replace(/\s/g, "")}`;
   });
   currentListItem.appendChild(saveButton);
   duplicateHelper.classList.add("invisible");
@@ -211,7 +217,9 @@ function editItem(itemObj, itemIndex, itemClass) {
 
 // Function to remove Item from DOM & Items Array
 function removeElement(itemToRemove) {
-  const elementToRemove = document.querySelector(`.${itemToRemove}`);
+  const elementToRemove = document.querySelector(
+    `.${itemToRemove.replace(/\s/g, "")}`
+  );
   for (const element of itemsArray) {
     if (element.itemName === itemToRemove) {
       itemsArray.splice(itemsArray.indexOf(element), 1);
@@ -226,13 +234,39 @@ function removeElement(itemToRemove) {
 
 addButton.addEventListener("click", addItemToList);
 
-console.log(emptyItemsHelper);
-
 previewButton.addEventListener("click", () => {
-  console.log(itemsArray);
   if (itemsArray.length === 0) {
     emptyItemsHelper.classList.remove("invisible");
     return;
   }
   emptyItemsHelper.classList.add("invisible");
+
+  const selectedDate = dateSelector.value;
+  const selectedTime = timeSelector.value;
+
+  console.log(selectedDate, selectedTime);
+
+  fetch("/upload-transaction", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      transactions: itemsArray,
+      date: selectedDate,
+      time: selectedTime,
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        alert("An Error Occured! Refresh the page and try again.");
+      }
+    })
+    .then((data) => {
+      previewEmbed.src = `file:///${data.path}`;
+    });
+
+  previewEmbed.classList.remove("invisible");
 });
