@@ -1,3 +1,5 @@
+import datetime
+from turtle import color
 from click import clear
 from flask import Flask, render_template, request, jsonify, Response  # Backend Server
 from reportlab.lib.pagesizes import letter  # To create a new document with a template
@@ -23,7 +25,7 @@ app = Flask(__name__, static_folder="static", static_url_path="/static")
 
 store_name = ""
 store_phone = ""
-store_address = ""
+store_address = "Billing Address: "
 store_gstin = ""
 
 store_transactions = []
@@ -40,6 +42,14 @@ def create_paragraph(text, style):
 # Homepage
 @app.route("/")
 def home():
+    global store_address, store_gstin, store_name, store_phone, store_transactions, shop_logo_path
+    store_name = ""
+    store_phone = ""
+    store_address = "Billing Address: "
+    store_gstin = ""
+
+    store_transactions = []
+    shop_logo_path = ""  # Store Logo Path
     return render_template("index.html")
 
 
@@ -50,7 +60,7 @@ def template_1():
     doc = SimpleDocTemplate(
         "invoices/template-1-invoice.pdf",
         pagesize=letter,
-        topMargin=0,
+        topMargin=-30,
         leftMargin=50,
         bottomMargin=0,
     )
@@ -60,11 +70,11 @@ def template_1():
         name="Heading",
         fontWeight="bold",
         fontName="Helvetica",
-        fontSize=20,
+        fontSize=32,
         textColor=colors.black,
         spaceAfter=20,
         alignment=1,
-        leading=25,
+        leading=40,
     )
 
     # Style for normal text
@@ -78,12 +88,22 @@ def template_1():
         alignment=0,
     )
 
+    subheading_style = ParagraphStyle(
+        name="Subheading-Text",
+        fontName="Times-Roman",
+        fontSize=15,
+        textColor=colors.black,
+        alignment=0,
+    )
+
     shop_logo = Image(
-        shop_logo_path, width=60, height=60
+        shop_logo_path, width=80, height=60
     )  # Creating an image and Adjusting width and height as needed
 
-    shop_header = ""
+    shop_header = store_name
     shop_header_paragraph = create_paragraph(shop_header, top_heading_style)
+
+    shop_address_paragraph = create_paragraph(store_address, subheading_style)
 
     table_style = TableStyle(
         [
@@ -93,9 +113,22 @@ def template_1():
         ]
     )
 
-    table = [[shop_logo, shop_header_paragraph]]
-    col_widths = [60, None]
-    college_header_table = Table(table, colWidths=col_widths, rowHeights=[100])
+    datetime_arr = [f"Date: {date}", f"Time: {time}"]
+
+    datetime_table = Table(
+        datetime_arr,
+        colWidths=[100, 100],
+        rowHeights=[20, 20],
+    )
+
+    datetime_table.setStyle(table_style)
+
+    table = [
+        [shop_logo, shop_header_paragraph],
+        [shop_address_paragraph, datetime_table],
+    ]
+    col_widths = [130, None]
+    college_header_table = Table(table, colWidths=col_widths, rowHeights=[150, 50])
 
     college_header_table.setStyle(table_style)
     story.append(college_header_table)
@@ -107,8 +140,8 @@ def template_1():
 def default_post():
     global store_name, store_address, store_phone, store_gstin
     data = request.get_json()
-    store_address = data.get("address")
-    store_name = data.get("name")
+    store_address += data.get("address")
+    store_name = data.get("shopName")
     store_phone = data.get("phNo")
     store_gstin = data.get("gstin")
     return jsonify({"message": "Successful Upload of Data"})
@@ -116,7 +149,6 @@ def default_post():
 
 @app.route("/default-page", methods=["GET"])
 def default_get():
-    global store_address, store_gstin, store_name, store_phone
     if store_phone == store_gstin == store_address == store_name == "":
         return "<h1 style='text-align: center; font-family: Arial, sans-serif; width:100%;'>An Error Occured, this could happen if you try to load the default page without providing store details.<h1>"
     return render_template("default.html")
@@ -140,9 +172,9 @@ def upload_transaction():
 def upload_file_handler():
     global shop_logo_path
     data = request.files["file"]
-    upload_path = os.path.join(os.getcwd(), f"temp")
+    upload_path = os.path.join(os.getcwd(), f"uploads")
     data.save(os.path.join(upload_path, data.filename))
-    shop_logo_path = f"temp/{data.filename}"
+    shop_logo_path = f"uploads/{data.filename}"
     return jsonify({"message": "File Uploaded Successfully"})
 
 
@@ -161,4 +193,5 @@ def clear_folders(folder):
 if __name__ == "__main__":
     clear_folders("./invoices")
     clear_folders("./temp")
+    clear_folders("./uploads")
     app.run("0.0.0.0", port=6969)

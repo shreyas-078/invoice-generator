@@ -1,1 +1,1 @@
-# This folder is to store all the logo file Uploads
+# This folder is to store all the temporary preview PDF files.

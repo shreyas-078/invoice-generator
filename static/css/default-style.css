@@ -10,6 +10,23 @@
   --heading-text: #778da9;
 }
 
+.heading-header {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  background-color: var(--heading-bg);
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 6rem;
+}
+
+.heading-header img {
+  width: 90px;
+  height: 90px;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -33,11 +50,8 @@ body {
 
 h1 {
   font-size: 3rem;
-  background-color: var(--heading-bg);
-  width: 100%;
   text-align: center;
   margin: 0;
-  padding: 1.5rem;
   color: var(--heading-text);
 }
 
@@ -116,6 +130,11 @@ textarea {
 
 #item {
   width: 65%;
+}
+
+#preview-embed {
+  height: 580px;
+  width: 420px;
 }
 
 .tax-input {

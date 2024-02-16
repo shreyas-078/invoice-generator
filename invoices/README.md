@@ -1,1 +1,1 @@
-# This folder is to store the generated PDF invoices
+# This folder is to store the final generated PDF invoices.

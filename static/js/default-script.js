@@ -1,5 +1,3 @@
-// Add Edit Feature for every item
-
 const addButton = document.getElementById("add");
 const itemsList = document.getElementById("list-of-items");
 const dateSelector = document.getElementById("date-selector");
@@ -57,6 +55,7 @@ function addItemToList() {
   let itemDescription = document.getElementById("description").value;
   const itemAmount = document.getElementById("amount").value;
   const itemQuantity = document.getElementById("quantity").value;
+  emptyItemsHelper.classList.add("invisible");
 
   if (!isNaN(parseInt(itemName.charAt(0)))) {
     itemNameHelper.textContent = "Invalid Item Name.";
