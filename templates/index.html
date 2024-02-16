@@ -11,22 +11,26 @@
 </head>
 
 <body>
-  <h1>Tax Invoice Generator</h1>
+  <div class="heading-header">
+    <img src="../static/assets/images/blue_red.png" alt="logo-pic">
+    <h1>Tax Invoice Generator</h1>
+  </div>
+
   <h2>ENTER YOUR STORE DETAILS</h2>
   <div id="main-div">
     <div class="permanent-field-container">
       <label for="shop-name">Shop Name:<span class="important">*</span></label>
-      <input type="text" name="shop-name" id="shop-name" class="input-all" placeholder="Example Shop">
+      <input type="text" name="shop-name" id="shop-name" class="input-all" placeholder="Example Shop" maxlength="30">
     </div>
 
     <div class="permanent-field-container">
       <label for="Address">Address:<span class="important">*</span></label>
-      <textarea name="address" id="address" cols="30" rows="4" class="input-all"></textarea>
+      <textarea name="address" id="address" cols="30" rows="4" class="input-all" maxlength="150"></textarea>
     </div>
 
     <div class="permanent-field-container">
       <label for="phone-num-label">Phone Number:<span class="important">*</span></label>
-      <input type="tel" name="phone" id="phone-num" class="input-all" placeholder="123-456-789">
+      <input type="tel" name="phone" id="phone-num" class="input-all" placeholder="123-456-789" maxlength="10">
     </div>
 
     <div class="permanent-field-container">
@@ -39,7 +43,7 @@
 
     <div class="permanent-field-container">
       <label for="gst" id="gst-num-label">GSTIN:<span class="important">*</span></label>
-      <input type="text" name="gst-num" id="gst-num" class="input-all" placeholder="22AAAAA0000A2S4">
+      <input type="text" name="gst-num" id="gst-num" class="input-all" placeholder="22AAAAA0000A2S4" maxlength="15">
     </div>
 
     <button type="button" id="confirm-details-btn">Confirm Details</button>
