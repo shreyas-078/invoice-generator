@@ -13,6 +13,8 @@ const previewEmbed = document.getElementById("preview-embed");
 
 const date = new Date();
 
+let downloadURL = "";
+
 let itemsArray = [];
 
 let currentDate;
@@ -234,6 +236,8 @@ function removeElement(itemToRemove) {
 addButton.addEventListener("click", addItemToList);
 
 previewButton.addEventListener("click", () => {
+  const totalTax = document.querySelector(".tax-input").value;
+
   if (itemsArray.length === 0) {
     emptyItemsHelper.classList.remove("invisible");
     return;
@@ -252,6 +256,7 @@ previewButton.addEventListener("click", () => {
     },
     body: JSON.stringify({
       transactions: itemsArray,
+      totalTax: totalTax,
       date: selectedDate,
       time: selectedTime,
     }),
@@ -268,8 +273,26 @@ previewButton.addEventListener("click", () => {
     })
     .then((blob) => {
       const objectURL = URL.createObjectURL(blob);
+      downloadURL = objectURL;
       previewEmbed.src = objectURL;
     });
 
   previewEmbed.classList.remove("invisible");
+  const currentButton = document.getElementById("download-pdf");
+  if (currentButton) {
+    currentButton.remove();
+  }
+  const downloadButton = document.createElement("button");
+  downloadButton.id = "download-pdf";
+  downloadButton.textContent = "Dowload Invoice";
+  downloadButton.style.fontSize = "2rem";
+  downloadButton.downloadButton.addEventListener("click", () => {
+    const downloadAnchor = document.createElement("a");
+    downloadAnchor.style.display = "none";
+    downloadAnchor.download = `Invoice-${currentDate}-${time}`;
+    downloadAnchor.href = downloadURL;
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+  });
+  document.querySelector("#preview-block").appendChild(downloadButton);
 });

@@ -6,6 +6,7 @@ const confirmDetailsBtn = document.getElementById("confirm-details-btn");
 const incorrectDetailsText = document.getElementById("incorrect-details-text");
 
 const phNoRegex = /^[6-9]\d{9}$/;
+const gstinRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
 
 function sendLogo() {
   const extension = logoUploadInput.value.substring(
@@ -47,6 +48,9 @@ function handleConfirm() {
   const phNo = document.getElementById("phone-num").value;
   const gstin = document.getElementById("gst-num").value;
   if (!shopName || !address || !phNo || !gstin) {
+    incorrectDetailsText.classList.remove("invisible");
+  } else if (!gstinRegex.test(gstin)) {
+    incorrectDetailsText.textContent = "Please Enter a Valid GSTIN";
     incorrectDetailsText.classList.remove("invisible");
   } else if (!phNoRegex.test(phNo)) {
     incorrectDetailsText.textContent = "Please Enter a Valid Phone Number";
