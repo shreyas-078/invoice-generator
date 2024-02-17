@@ -13,7 +13,8 @@
 <body>
   <div class="heading-header">
     <img src="../static/assets/images/blue_red.png" alt="logo-pic">
-    <h1>Tax Invoice Generator</h1>
+    <h1>Ta<span class="endcolor">x </span>Invoic<span class="endcolor">e </span>Generato<span class="endcolor">r </span>
+    </h1>
   </div>
 
   <h2>ENTER YOUR STORE DETAILS</h2>
@@ -43,13 +44,13 @@
 
     <div class="permanent-field-container">
       <label for="gst" id="gst-num-label">GSTIN:<span class="important">*</span></label>
-      <input type="text" name="gst-num" id="gst-num" class="input-all" placeholder="22AAAAA0000A2S4" maxlength="15">
+      <input type="text" name="gst-num" id="gst-num" class="input-all" placeholder="22AAAAA0000A1Z5" maxlength="15">
     </div>
+
+    <p id="incorrect-details-text" class="invisible">Please Enter all Details before proceeding.</p>
 
     <button type="button" id="confirm-details-btn">Confirm Details</button>
   </div>
-
-  <p id="incorrect-details-text" class="invisible">Please Enter all Details before proceeding.</p>
 
 </body>
 

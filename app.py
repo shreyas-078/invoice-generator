@@ -11,11 +11,8 @@ from reportlab.platypus import (
     TableStyle,
     Paragraph,
     Image,
-    Spacer,
 )  # Reportlab Utility for customization
 import os, shutil
-
-from torch import normal
 
 # Creating Flask App
 app = Flask(__name__, static_folder="static", static_url_path="/static")
@@ -53,6 +50,7 @@ def home():
 
 
 def template_1():
+    global shop_logo_path
     story = []
 
     # Creating a PDF Document Template
@@ -139,6 +137,9 @@ def template_1():
         alignment=0,
         spaceAfter=20,
     )
+
+    if shop_logo_path == "":
+        shop_logo_path = "./static/assets/images/white.png"
 
     shop_logo = Image(
         shop_logo_path, width=80, height=60, kind="proportional"

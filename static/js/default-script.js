@@ -35,6 +35,8 @@ if (month < 10) {
 
 dateSelector.value = currentDate;
 
+dateSelector.max = currentDate;
+
 const hour = date.getHours();
 const min = date.getMinutes();
 let time = `${hour}:${min}:00`;
@@ -105,7 +107,7 @@ function addItemToList() {
     itemQuantity: itemQuantity,
   });
 
-  newItem.innerHTML = `Item Name: <input type='text' disabled class='editable-input' value='${itemName}'> Description: <input type='text' disabled class='editable-input' value='${itemDescription}'> Item Amount: <input type='text' disabled class='editable-input' value='${itemAmount}'> Item Quantity: <input type='text' disabled class='editable-input' value='${itemQuantity}'><button onClick = "removeElement('${itemName}')">Remove Item</button> <button onClick = "editItem('${
+  newItem.innerHTML = `Item Name: <input type='text' disabled class='editable-input' value='${itemName}'> Description: <input type='text' disabled class='editable-input' value='${itemDescription}'> Item Amount: <input type='number' disabled class='editable-input' value='${itemAmount}'> Item Quantity: <input type='number' disabled class='editable-input' value='${itemQuantity}'><button onClick = "removeElement('${itemName}')">Remove Item</button> <button onClick = "editItem('${
     itemsArray[itemsArray.length - 1]
   }', ${itemsArray.length - 1}, '${itemName.replace(
     /\s/g,
@@ -120,11 +122,13 @@ function editItem(itemObj, itemIndex, itemClass) {
   const saveButton = document.createElement("button");
   const editButton = document.querySelector(`#edit-button-${itemClass}`);
   const itemNameInput = currentListItem.querySelector("input");
-  const initialItemNameInput = itemNameInput.value;
   const itemDescriptionInput = itemNameInput.nextElementSibling;
   const itemAmountInput = itemDescriptionInput.nextElementSibling;
   const itemQuantityInput = itemAmountInput.nextElementSibling;
   const removeButton = itemQuantityInput.nextElementSibling;
+  const initialItemNameInput = itemNameInput.value;
+  const initialQuantityInput = itemQuantityInput.value;
+  const initialAmountInput = itemAmountInput.value;
 
   itemNameInput.disabled =
     itemDescriptionInput.disabled =
@@ -146,6 +150,36 @@ function editItem(itemObj, itemIndex, itemClass) {
     const itemAmountInputValue = itemDescriptionInput.nextElementSibling.value;
     const itemQuantityInputValue = itemAmountInput.nextElementSibling.value;
 
+    if (
+      itemAmountInputValue === "" ||
+      !isNaN(parseInt(itemNameInputValue.charAt(0))) ||
+      itemQuantityInputValue === "" ||
+      itemNameInputValue === ""
+    ) {
+      duplicateHelper.textContent =
+        "Invalid Characters Detected. No changes made.";
+      currentListItem.querySelector("input").value = initialItemNameInput;
+      currentListItem.querySelector(
+        "input"
+      ).nextElementSibling.nextElementSibling.value = initialAmountInput;
+      currentListItem.querySelector(
+        "input"
+      ).nextElementSibling.nextElementSibling.nextElementSibling.value =
+        initialQuantityInput;
+      duplicateHelper.classList.remove("invisible");
+      editButton.classList.remove("invisible");
+      saveButton.remove();
+      itemNameInput.classList.remove("editing-state");
+      itemDescriptionInput.classList.remove("editing-state");
+      itemQuantityInput.classList.remove("editing-state");
+      itemAmountInput.classList.remove("editing-state");
+      itemNameInput.disabled =
+        itemDescriptionInput.disabled =
+        itemQuantityInput.disabled =
+        itemAmountInput.disabled =
+          true;
+      return;
+    }
     for (const item of itemsArray) {
       if (
         item.itemName === itemNameInputValue &&
@@ -154,6 +188,7 @@ function editItem(itemObj, itemIndex, itemClass) {
         item.itemQuantity === itemQuantityInputValue
       ) {
         currentListItem.querySelector("input").value = initialItemNameInput;
+        duplicateHelper.textContent = "Duplicate Item. No Changes made.";
         duplicateHelper.classList.remove("invisible");
         editButton.classList.remove("invisible");
         saveButton.remove();
@@ -247,8 +282,6 @@ previewButton.addEventListener("click", () => {
   const selectedDate = dateSelector.value;
   const selectedTime = timeSelector.value;
 
-  console.log(selectedDate, selectedTime);
-
   fetch("/upload-transaction", {
     method: "POST",
     headers: {
@@ -284,9 +317,10 @@ previewButton.addEventListener("click", () => {
   }
   const downloadButton = document.createElement("button");
   downloadButton.id = "download-pdf";
-  downloadButton.textContent = "Dowload Invoice";
+  downloadButton.textContent = "Download Invoice";
   downloadButton.style.fontSize = "2rem";
-  downloadButton.downloadButton.addEventListener("click", () => {
+  downloadButton.classList.add("invoice-button");
+  downloadButton.addEventListener("click", () => {
     const downloadAnchor = document.createElement("a");
     downloadAnchor.style.display = "none";
     downloadAnchor.download = `Invoice-${currentDate}-${time}`;
