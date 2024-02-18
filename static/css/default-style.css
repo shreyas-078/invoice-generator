@@ -200,6 +200,13 @@ h3 {
   text-align: center;
 }
 
+#edit-store-details {
+  font-size: 2rem;
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+}
+
 .invoice-button {
   margin-bottom: 1rem;
 }

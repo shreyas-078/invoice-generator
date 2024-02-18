@@ -10,6 +10,7 @@ const duplicateHelper = document.getElementById("duplicate-helper-text");
 const previewButton = document.getElementById("preview");
 const emptyItemsHelper = document.getElementById("empty-items-helper");
 const previewEmbed = document.getElementById("preview-embed");
+const editStoreButton = document.getElementById("edit-store-details");
 
 const date = new Date();
 
@@ -329,4 +330,8 @@ previewButton.addEventListener("click", () => {
     downloadAnchor.click();
   });
   document.querySelector("#preview-block").appendChild(downloadButton);
+});
+
+editStoreButton.addEventListener("click", () => {
+  window.location.replace("/");
 });

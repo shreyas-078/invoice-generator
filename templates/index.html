@@ -8,6 +8,17 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
   <link rel="icon" href="../static/assets/images/favicon.png" type="image/png">
+  <script>
+    // To Prevent User from using back button to come back here.
+    function preventBack() {
+      window.history.forward();
+    }
+
+    setTimeout("preventBack()", 0);
+    window.onunload = function () {
+      null
+    };
+  </script>
 </head>
 
 <body>

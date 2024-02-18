@@ -38,14 +38,19 @@ def create_paragraph(text, style):
 # Homepage
 @app.route("/")
 def home():
-    global store_address, store_gstin, store_name, store_phone, store_transactions, shop_logo_path
+    global store_address, store_gstin, store_name, store_phone, store_transactions, shop_logo_path, store_tax, store_tax_num, time, date
     store_name = ""
     store_phone = ""
     store_address = "Billing Address: "
     store_gstin = ""
 
     store_transactions = []
+    store_tax = ""
+    store_tax_num = 0
+    time = ""
+    date = ""
     shop_logo_path = ""  # Store Logo Path
+
     return render_template("index.html")
 
 
