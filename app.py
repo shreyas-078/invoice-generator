@@ -338,6 +338,13 @@ def upload_file_handler():
 
 
 def clear_folders(folder):
+    # Check if the folder exists
+    if not os.path.exists(folder):
+        print(f"Folder {folder} does not exist, creating it.")
+        os.makedirs(folder)  # Create the folder if it doesn't exist
+        return  # Exit the function after creating the folder
+
+    # Proceed with clearing the folder if it exists
     for filename in os.listdir(folder):
         file_path = os.path.join(folder, filename)
         try:
@@ -346,7 +353,7 @@ def clear_folders(folder):
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path)
         except Exception as e:
-            print("Failed to delete %s. Reason: %s" % (file_path, e))
+            print(f"Failed to delete {file_path}. Reason: {e}")
 
 
 if __name__ == "__main__":
