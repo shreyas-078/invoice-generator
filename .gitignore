@@ -12,3 +12,5 @@ invoices/*
 # Don't Ignore the README Files
 !temp/README.md
 !invoices/README.md
+
+.DS_Store
