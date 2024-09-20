@@ -359,4 +359,6 @@ def clear_folders(folder):
 if __name__ == "__main__":
     clear_folders("./invoices")
     clear_folders("./uploads")
-    app.run("0.0.0.0", port=6969)
+    # Check if we are in development mode before running app.run()
+    if os.getenv("FLASK_ENV") == "development":
+        app.run("0.0.0.0", port=6969)  # This runs only in local development
